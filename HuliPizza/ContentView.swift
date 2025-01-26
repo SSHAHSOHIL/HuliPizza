@@ -6,19 +6,33 @@
 //
 
 import SwiftUI
-
 struct ContentView: View {
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Text("Huli Pizza Company")
+            Image("surfBanner")
+                .resizable()
+                .scaledToFit()
+            Text("Order Pizza")
+                .font(.title)
+            HStack {
+                Text("Your Order Item")
+                Spacer()
+                Text("00.00")
+            }
+            HStack {
+                Image("0_sm")
+                Text("Margherita")
+            }
+            Spacer()
         }
         .padding()
     }
 }
-
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+        
+    }
 }
+
