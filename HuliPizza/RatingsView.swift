@@ -8,11 +8,16 @@
 import SwiftUI
 
 struct RatingsView: View {
+    var numberRating:Int
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            ForEach(1...6,id:\.self) {circle in
+                Image(systemName: numberRating < circle ? "fork.knife.circle" : "fork.knife.circle.fill" )
+            }
+        }
     }
 }
 
 #Preview {
-    RatingsView()
+    RatingsView(numberRating: 13)
 }
