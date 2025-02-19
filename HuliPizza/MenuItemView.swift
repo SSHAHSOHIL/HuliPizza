@@ -9,16 +9,18 @@ import SwiftUI
 
 struct MenuItemView: View {
     @State private var addedItem:Bool = false
+    @Binding var item:MenuItem
+    @ObservedObject var orders:OrderModel
     var body: some View {
         VStack {
             HStack {
-                Text("Margherita Huli Pizza")
+                Text(item.name)
                     .font(.title)
                     .fontWeight(.semibold)
                     .foregroundStyle(.ultraThickMaterial)
                     .padding(.leading)
                     
-                if let image = UIImage(named: "0_lg") {
+                if let image = UIImage(named: "\(item.id)_lg") {
                     Image(uiImage: image)
                         .resizable()
                         .scaledToFit()
@@ -35,18 +37,20 @@ struct MenuItemView: View {
             .shadow(color: .teal, radius: 5, x:8, y:8)
             VStack(alignment: .leading) {
                 ScrollView {
-                    Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eu velit felis. Integer neque ipsum, faucibus ac enim ac, dapibus elementum diam. Phasellus dapibus, est ac ultricies lobortis, sem justo dignissim dolor, sed accumsan sapien neque ac dui. Nunc iaculis felis vitae luctus faucibus. Pellentesque tellus purus, sollicitudin sed mattis sed, imperdiet eget risus. Donec pharetra molestie mi. Integer ante nulla, euismod quis felis a, efficitur mattis elit. Maecenas massa erat, consequat tincidunt dolor eu, tristique aliquam felis. Nam ultrices purus id rhoncus suscipit. Nam et nisi eget risus bibendum ornare. Suspendisse fringilla augue non tellus dignissim, ac egestas magna vehicula.")
+                    Text(item.description)
                         .font(.custom("Georgia", size: 18, relativeTo: .body))
                 }
             }
             Button {
                 addedItem = true
+                orders.addOrder(item, quantity: 1)
             } label: {
                 Spacer()
-                Text(12.99, format:.currency(code: "USD")).bold()
+                Text(item.price, format:.currency(code: "USD")).bold()
                 Image(systemName: addedItem ? "cart.fill.badge.plus" : "cart.badge.plus")
                 Spacer()
             }
+            .disabled(item.id < 0)
             .padding()
             .background(.red, in:Capsule())
             .foregroundStyle(.white)
@@ -56,5 +60,5 @@ struct MenuItemView: View {
 }
 
 #Preview {
-    MenuItemView()
+    MenuItemView(item: .constant(testMenuItem), orders: OrderModel())
 }
