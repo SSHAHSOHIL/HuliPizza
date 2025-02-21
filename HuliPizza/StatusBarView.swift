@@ -9,6 +9,7 @@ import SwiftUI
 
 struct StatusBarView: View {
     @Binding var showOrder:Bool
+    @Binding var presentGrid:Bool
     @EnvironmentObject var orders:OrderModel
     
     var body: some View {
@@ -20,6 +21,17 @@ struct StatusBarView: View {
             } label: {
                 Image(systemName: showOrder ? "cart" : "menucard")
             }
+            
+            if !showOrder {
+                Button() {
+                    presentGrid.toggle()
+                } label: {
+                    Image(systemName: presentGrid ? "square.grid.3x2" : "list.bullet")
+                }
+                .padding(.leading,10)
+            }
+
+            
             Spacer()
             
             Label {
@@ -35,5 +47,6 @@ struct StatusBarView: View {
 }
 
 #Preview {
-    StatusBarView(showOrder: .constant(false)).environmentObject(OrderModel())
+    StatusBarView(showOrder: .constant(true), presentGrid: .constant(false)).environmentObject(OrderModel())
+        .background(.black)
 }
